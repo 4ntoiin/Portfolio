@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Antoine Makengo Kiala | Cyber × Géopolitique</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { cyber:{ green:'#00ff9d',blue:'#00d4ff',dark:'#080c10',card:'#0d1117',border:'#1a2332',dim:'#8b949e' } }, fontFamily:{ mono:['"JetBrains Mono"','monospace'], display:['Orbitron','monospace'] } } }
+    }
+  </script>
+  <style>
+    :root{--green:#00ff9d;--blue:#00d4ff;--dark:#080c10;--card:#0d1117;--border:#1a2332;--dim:#8b949e;}
+    *{box-sizing:border-box;margin:0;padding:0;}html{background:var(--dark);}
+    body{font-family:'JetBrains Mono',monospace;background:var(--dark);color:#c9d1d9;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,.15) 3px,rgba(0,0,0,.15) 4px);pointer-events:none;z-index:9999;}
+    body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");opacity:.04;pointer-events:none;z-index:9998;}
+    .grid-bg{background-image:linear-gradient(rgba(0,255,157,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,157,.04) 1px,transparent 1px);background-size:40px 40px;}
+    .glow-green{text-shadow:0 0 10px var(--green),0 0 30px rgba(0,255,157,.4);}
+    .card-hover{transition:all .3s ease;}.card-hover:hover{border-color:rgba(0,255,157,.4)!important;box-shadow:0 0 30px rgba(0,255,157,.1);transform:translateY(-2px);}
+    .terminal-window{background:#0d1117;border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,.8),0 0 80px rgba(0,255,157,.05);}
+    .terminal-bar{background:#161b22;padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);}
+    .dot{width:12px;height:12px;border-radius:50%;}.dot-r{background:#ff5f57;}.dot-y{background:#febc2e;}.dot-g{background:#28c840;}
+    .terminal-title{font-size:11px;color:var(--dim);margin-left:auto;margin-right:auto;letter-spacing:.1em;}
+    .terminal-body{padding:20px;font-size:14px;line-height:1.8;min-height:220px;}
+    .prompt{color:var(--green);}.cmd{color:#c9d1d9;}.out{color:var(--dim);}.out span.hi{color:var(--blue);}
+    .cursor{display:inline-block;width:8px;height:15px;background:var(--green);vertical-align:middle;animation:blink 1s step-end infinite;}
+    @keyframes blink{50%{opacity:0;}}
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:4px;font-size:12px;font-weight:600;letter-spacing:.08em;border:1px solid;}
+    .road-step{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;}
+    .road-node{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;border:2px solid;}
+    .road-connector{flex:1;height:2px;background:linear-gradient(90deg,var(--green),var(--blue));position:relative;overflow:hidden;}
+    .road-connector::after{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;background:rgba(255,255,255,.4);animation:flow 2s linear infinite;}
+    @keyframes flow{to{left:200%;}}
+    .skill-bar-track{background:#1a2332;border-radius:2px;height:6px;overflow:hidden;}
+    .skill-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--green),var(--blue));transform:scaleX(0);transform-origin:left;transition:transform 1.2s cubic-bezier(.4,0,.2,1);}
+    .skill-bar-fill.animated{transform:scaleX(1);}
+    section{padding:80px 0;}
+    ::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:var(--dark);}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}::-webkit-scrollbar-thumb:hover{background:var(--green);}
+    nav{backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+    .fade-in{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease;}
+    .fade-in.visible{opacity:1;transform:translateY(0);}
+    .apt-card{border:1px solid var(--border);border-radius:6px;padding:16px;background:rgba(13,17,23,.8);transition:all .3s ease;}
+    .apt-card:hover{border-color:rgba(0,212,255,.4);box-shadow:0 0 20px rgba(0,212,255,.08);}
+  </style>
+</head>
+<body class="grid-bg">
+
+  <nav class="fixed top-0 left-0 right-0 z-50" style="background:rgba(8,12,16,.85);">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <span class="font-display font-bold text-sm tracking-widest" style="color:var(--green);">&lt;4NTOIIN /&gt;</span>
+      <ul class="hidden md:flex items-center gap-8 text-xs tracking-widest" style="color:var(--dim);">
+        <li><a href="#hero" class="hover:text-white transition-colors">TERMINAL</a></li>
+        <li><a href="#apt" class="hover:text-white transition-colors">ANALYSES APT</a></li>
+        <li><a href="#roadmap" class="hover:text-white transition-colors">ROADMAP</a></li>
+        <li><a href="#skills" class="hover:text-white transition-colors">SKILLS</a></li>
+        <li><a href="projects.html" class="flex items-center gap-2 px-4 py-2 border rounded transition-all" style="border-color:var(--green);color:var(--green);" onmouseover="this.style.background='rgba(0,255,157,.1)'" onmouseout="this.style.background='transparent'"><i class="fa-solid fa-code-branch text-xs"></i>PROJETS</a></li>
+        <li><a href="analyses.html" class="flex items-center gap-2 px-4 py-2 border rounded transition-all" style="border-color:var(--blue);color:var(--blue);" onmouseover="this.style.background='rgba(0,212,255,.1)'" onmouseout="this.style.background='transparent'"><i class="fa-solid fa-scroll text-xs"></i>ANALYSES</a></li>
+        <li><a href="lab.html" class="flex items-center gap-2 px-4 py-2 border rounded transition-all" style="border-color:#ff4757;color:#ff4757;" onmouseover="this.style.background='rgba(255,71,87,.1)'" onmouseout="this.style.background='transparent'"><i class="fa-solid fa-terminal text-xs"></i>APT LAB</a></li>
+        <li><a href="https://github.com/4ntoiin" target="_blank" class="px-4 py-2 border rounded transition-all" style="border-color:var(--green);color:var(--green);" onmouseover="this.style.background='rgba(0,255,157,.1)'" onmouseout="this.style.background='transparent'">GITHUB</a></li>
+      </ul>
+      <button class="md:hidden text-gray-400" onclick="document.getElementById('mob').classList.toggle('hidden')"><i class="fa fa-bars"></i></button>
+    </div>
+    <div id="mob" class="hidden md:hidden px-6 pb-4 flex flex-col gap-4 text-xs tracking-widest" style="color:var(--dim);">
+      <a href="#hero" class="hover:text-white">TERMINAL</a>
+      <a href="#apt" class="hover:text-white">ANALYSES APT</a>
+      <a href="#roadmap" class="hover:text-white">ROADMAP</a>
+      <a href="#skills" class="hover:text-white">SKILLS</a>
+      <a href="projects.html" style="color:var(--green);">PROJETS</a>
+      <a href="analyses.html" style="color:var(--blue);">ANALYSES</a>
+      <a href="lab.html" style="color:#ff4757;">APT LAB</a>
+      <a href="https://github.com/4ntoiin" target="_blank" style="color:var(--green);">GITHUB</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero" class="min-h-screen flex flex-col items-center justify-center px-4 pt-20">
+    <div class="max-w-3xl w-full mx-auto">
+      <div class="text-center mb-10">
+        <p class="text-xs tracking-widest mb-3" style="color:var(--green);">// INITIATING HANDSHAKE...</p>
+        <h1 class="font-display font-black text-4xl md:text-6xl tracking-tight mb-4 glow-green" style="color:var(--green);">ANTOINE</h1>
+        <p class="text-sm md:text-base tracking-widest" style="color:var(--dim);">Cyber&nbsp;×&nbsp;Géopolitique&nbsp;·&nbsp;STI2D&nbsp;·&nbsp;Île-de-France&nbsp;·&nbsp;17&nbsp;ans</p>
+      </div>
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+          <span class="terminal-title">antoine@kali:~</span>
+        </div>
+        <div class="terminal-body" id="termBody"></div>
+      </div>
+      <div class="flex justify-center gap-4 mt-10 flex-wrap">
+        <a href="#apt" class="px-6 py-3 font-display text-xs tracking-widest font-bold rounded transition-all" style="background:var(--green);color:#080c10;" onmouseover="this.style.boxShadow='0 0 30px rgba(0,255,157,.5)'" onmouseout="this.style.boxShadow='none'">
+          <i class="fa-solid fa-shield-halved mr-2"></i>ANALYSES APT
+        </a>
+        <a href="projects.html" class="px-6 py-3 font-display text-xs tracking-widest font-bold rounded border transition-all" style="border-color:var(--blue);color:var(--blue);" onmouseover="this.style.boxShadow='0 0 30px rgba(0,212,255,.3)'" onmouseout="this.style.boxShadow='none'">
+          <i class="fa-solid fa-code-branch mr-2"></i>PROJETS
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANALYSES APT -->
+  <section id="apt" class="px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="fade-in mb-14 text-center">
+        <p class="text-xs tracking-widest mb-2" style="color:var(--green);">// THREAT INTELLIGENCE</p>
+        <h2 class="font-display font-bold text-3xl md:text-4xl text-white mb-4">ANALYSES <span style="color:var(--green);">APT</span></h2>
+        <p class="text-sm max-w-xl mx-auto" style="color:var(--dim);">Étude des cyberattaques étatiques — attribution, mapping MITRE ATT&CK et contexte géopolitique.</p>
+      </div>
+      <div class="fade-in flex justify-center mb-12">
+        <div class="inline-flex items-center gap-4 px-6 py-4 rounded-lg" style="background:#0d1117;border:1px solid rgba(0,212,255,.3);box-shadow:0 0 30px rgba(0,212,255,.08);">
+          <div class="text-center"><div class="font-display font-black text-3xl" style="color:var(--blue);">6</div><div class="text-xs tracking-widest mt-1" style="color:var(--dim);">GROUPES APT</div></div>
+          <div style="width:1px;height:40px;background:var(--border);"></div>
+          <div class="text-center"><div class="font-display font-black text-3xl" style="color:var(--green);">7+</div><div class="text-xs tracking-widest mt-1" style="color:var(--dim);">TECHNIQUES MITRE</div></div>
+          <div style="width:1px;height:40px;background:var(--border);"></div>
+          <div class="text-center"><i class="fa-solid fa-globe text-2xl" style="color:var(--green);"></i><div class="text-xs tracking-widest mt-1" style="color:var(--dim);">GÉOPOLITIQUE</div></div>
+        </div>
+      </div>
+      <div class="fade-in grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-14">
+        <div class="apt-card">
+          <div class="flex items-center justify-between mb-3"><span class="font-display text-sm font-bold text-white">Stuxnet</span><i class="fa-solid fa-radiation text-xs" style="color:var(--green);"></i></div>
+          <p class="text-xs mb-2" style="color:var(--dim);">USA + Israël → Iran · 2010 · Infrastructure nucléaire. Première cyberarme à détruire des équipements physiques. 4 zero-days simultanés.</p>
+          <div class="flex flex-wrap gap-2 mt-3">
+            <span class="badge" style="background:rgba(0,255,157,.08);border-color:rgba(0,255,157,.3);color:var(--green);"><i class="fa-solid fa-code text-xs"></i> EQUATION GROUP</span>
+            <span class="badge" style="background:rgba(0,212,255,.08);border-color:rgba(0,212,255,.3);color:var(--blue);"><i class="fa-solid fa-microchip text-xs"></i> ICS/SCADA</span>
+          </div>
+        </div>
+        <div class="apt-card">
+          <div class="flex items-center justify-between mb-3"><span class="font-display text-sm font-bold text-white">NotPetya</span><i class="fa-solid fa-skull text-xs" style="color:#ff4757;"></i></div>
+          <p class="text-xs mb-2" style="color:var(--dim);">Russie → Ukraine + Monde · 2017 · Wiper destructeur. 10 milliards $ de dégâts. La cyberattaque la plus coûteuse de l'histoire.</p>
+          <div class="flex flex-wrap gap-2 mt-3">
+            <span class="badge" style="background:rgba(255,71,87,.08);border-color:rgba(255,71,87,.3);color:#ff4757;"><i class="fa-solid fa-chess-rook text-xs"></i> Sandworm</span>
+            <span class="badge" style="background:rgba(168,85,247,.08);border-color:rgba(168,85,247,.3);color:#a855f7;"><i class="fa-solid fa-bomb text-xs"></i> Wiper</span>
+          </div>
+        </div>
+        <div class="apt-card">
+          <div class="flex items-center justify-between mb-3"><span class="font-display text-sm font-bold text-white">WannaCry</span><i class="fa-solid fa-lock text-xs" style="color:#eab308;"></i></div>
+          <p class="text-xs mb-2" style="color:var(--dim);">Corée du Nord → 150 pays · 2017. Exploit NSA EternalBlue détourné. 200 000 systèmes infectés en 24h.</p>
+          <div class="flex flex-wrap gap-2 mt-3">
+            <span class="badge" style="background:rgba(234,179,8,.08);border-color:rgba(234,179,8,.3);color:#eab308;"><i class="fa-solid fa-ghost text-xs"></i> Lazarus</span>
+            <span class="badge" style="background:rgba(0,255,157,.08);border-color:rgba(0,255,157,.3);color:var(--green);"><i class="fa-solid fa-key text-xs"></i> Ransomware</span>
+          </div>
+        </div>
+        <div class="apt-card">
+          <div class="flex items-center justify-between mb-3"><span class="font-display text-sm font-bold text-white">SolarWinds</span><i class="fa-solid fa-sun text-xs" style="color:var(--blue);"></i></div>
+          <p class="text-xs mb-2" style="color:var(--dim);">Russie → Agences US · 2020. 18 000 organisations touchées via mise à jour logicielle compromise.</p>
+          <div class="flex flex-wrap gap-2 mt-3">
+            <span class="badge" style="background:rgba(0,212,255,.08);border-color:rgba(0,212,255,.3);color:var(--blue);"><i class="fa-solid fa-spider text-xs"></i> APT29</span>
+            <span class="badge" style="background:rgba(251,146,60,.08);border-color:rgba(251,146,60,.3);color:#fb923c;"><i class="fa-solid fa-link text-xs"></i> Supply Chain</span>
+          </div>
+        </div>
+        <div class="apt-card">
+          <div class="flex items-center justify-between mb-3"><span class="font-display text-sm font-bold text-white">APT28 / Fancy Bear</span><i class="fa-solid fa-paw text-xs" style="color:var(--green);"></i></div>
+          <p class="text-xs mb-2" style="color:var(--dim);">Russie (GRU) · Actif depuis 2004. Élections US 2016, OTAN, ministères européens.</p>
+          <div class="flex flex-wrap gap-2 mt-3">
+            <span class="badge" style="background:rgba(0,255,157,.08);border-color:rgba(0,255,157,.3);color:var(--green);"><i class="fa-solid fa-flag text-xs"></i> GRU Russie</span>
+            <span class="badge" style="background:rgba(0,212,255,.08);border-color:rgba(0,212,255,.3);color:var(--blue);"><i class="fa-solid fa-envelope text-xs"></i> Phishing</span>
+          </div>
+        </div>
+        <div class="apt-card">
+          <div class="flex items-center justify-between mb-3"><span class="font-display text-sm font-bold text-white">APT41</span><i class="fa-solid fa-dragon text-xs" style="color:var(--blue);"></i></div>
+          <p class="text-xs mb-2" style="color:var(--dim);">Chine (MSS) · Double mission espionnage + cybercriminalité. Unique groupe étatique dual-purpose.</p>
+          <div class="flex flex-wrap gap-2 mt-3">
+            <span class="badge" style="background:rgba(251,146,60,.08);border-color:rgba(251,146,60,.3);color:#fb923c;"><i class="fa-solid fa-yin-yang text-xs"></i> MSS Chine</span>
+            <span class="badge" style="background:rgba(168,85,247,.08);border-color:rgba(168,85,247,.3);color:#a855f7;"><i class="fa-solid fa-coins text-xs"></i> Dual-purpose</span>
+          </div>
+        </div>
+      </div>
+      <div class="fade-in grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="p-5 rounded-lg text-center border transition-all card-hover" style="background:#0d1117;border-color:rgba(0,255,157,.2);"><i class="fa-solid fa-chess-board text-2xl mb-3" style="color:var(--green);"></i><div class="font-display text-xs font-bold text-white mb-1">ATTRIBUTION</div><div class="text-xs" style="color:var(--dim);">MITRE · TTPs · IOCs</div></div>
+        <div class="p-5 rounded-lg text-center border transition-all card-hover" style="background:#0d1117;border-color:rgba(0,212,255,.2);"><i class="fa-solid fa-globe text-2xl mb-3" style="color:var(--blue);"></i><div class="font-display text-xs font-bold text-white mb-1">GÉOPOLITIQUE</div><div class="text-xs" style="color:var(--dim);">Contexte · Motivations</div></div>
+        <div class="p-5 rounded-lg text-center border transition-all card-hover" style="background:#0d1117;border-color:rgba(168,85,247,.2);"><i class="fa-solid fa-magnifying-glass text-2xl mb-3" style="color:#a855f7;"></i><div class="font-display text-xs font-bold text-white mb-1">OSINT</div><div class="text-xs" style="color:var(--dim);">Shodan · VirusTotal</div></div>
+        <div class="p-5 rounded-lg text-center border transition-all card-hover" style="background:#0d1117;border-color:rgba(251,146,60,.2);"><i class="fa-solid fa-shield-virus text-2xl mb-3" style="color:#fb923c;"></i><div class="font-display text-xs font-bold text-white mb-1">THREAT INTEL</div><div class="text-xs" style="color:var(--dim);">APT · Cyberguerre</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section id="roadmap" class="px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="fade-in mb-14 text-center">
+        <p class="text-xs tracking-widest mb-2" style="color:var(--green);">// TRAJECTOIRE ACADÉMIQUE</p>
+        <h2 class="font-display font-bold text-3xl md:text-4xl text-white">ROAD<span style="color:var(--green);">MAP</span></h2>
+      </div>
+      <div class="fade-in hidden md:flex items-center justify-between mb-8">
+        <div class="road-step flex-none w-40">
+          <div class="road-node" style="background:rgba(0,255,157,.1);border-color:var(--green);color:var(--green);"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div class="text-center mt-3"><div class="font-display text-xs font-bold text-white">STI2D</div><div class="text-xs mt-1" style="color:var(--dim);">Maintenant</div><div class="text-xs mt-2 px-3 py-1 rounded" style="background:rgba(0,255,157,.08);color:var(--green);border:1px solid rgba(0,255,157,.2);">✓ EN COURS</div></div>
+        </div>
+        <div class="road-connector flex-1 mx-3"></div>
+        <div class="road-step flex-none w-40">
+          <div class="road-node" style="background:rgba(0,212,255,.1);border-color:var(--blue);color:var(--blue);"><i class="fa-solid fa-network-wired"></i></div>
+          <div class="text-center mt-3"><div class="font-display text-xs font-bold text-white">BUT R&T</div><div class="text-xs mt-1" style="color:var(--dim);">Réseaux & Télécoms</div><div class="text-xs mt-2 px-3 py-1 rounded" style="background:rgba(0,212,255,.08);color:var(--blue);border:1px solid rgba(0,212,255,.2);">○ PROCHAIN</div></div>
+        </div>
+        <div class="road-connector flex-1 mx-3"></div>
+        <div class="road-step flex-none w-40">
+          <div class="road-node" style="background:rgba(168,85,247,.1);border-color:#a855f7;color:#a855f7;"><i class="fa-solid fa-brain"></i></div>
+          <div class="text-center mt-3"><div class="font-display text-xs font-bold text-white">MASTER</div><div class="text-xs mt-1" style="color:var(--dim);">Cyber + Géopolitique</div><div class="text-xs mt-2 px-3 py-1 rounded" style="background:rgba(168,85,247,.08);color:#a855f7;border:1px solid rgba(168,85,247,.2);">○ FUTUR</div></div>
+        </div>
+        <div class="road-connector flex-1 mx-3"></div>
+        <div class="road-step flex-none w-40">
+          <div class="road-node" style="background:rgba(251,146,60,.1);border-color:#fb923c;color:#fb923c;"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="text-center mt-3"><div class="font-display text-xs font-bold text-white">ANALYSTE TI</div><div class="text-xs mt-1" style="color:var(--dim);">Threat Intelligence</div><div class="text-xs mt-2 px-3 py-1 rounded" style="background:rgba(251,146,60,.08);color:#fb923c;border:1px solid rgba(251,146,60,.2);">● OBJECTIF</div></div>
+        </div>
+      </div>
+      <div class="fade-in grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
+        <div class="p-4 rounded-lg border" style="background:#0d1117;border-color:rgba(0,255,157,.15);"><div class="font-display text-xs font-bold mb-2" style="color:var(--green);">// ACTUELLEMENT</div><p class="text-xs" style="color:var(--dim);">STI2D · Python · Kali Linux · Projets GitHub · Veille géopolitique APT</p></div>
+        <div class="p-4 rounded-lg border" style="background:#0d1117;border-color:rgba(0,212,255,.15);"><div class="font-display text-xs font-bold mb-2" style="color:var(--blue);">// BUT R&T</div><p class="text-xs" style="color:var(--dim);">Réseaux · Protocoles · Cybersécurité · Wireshark · Administration</p></div>
+        <div class="p-4 rounded-lg border" style="background:#0d1117;border-color:rgba(168,85,247,.15);"><div class="font-display text-xs font-bold mb-2" style="color:#a855f7;">// MASTER</div><p class="text-xs" style="color:var(--dim);">Threat Intelligence · Géopolitique · MITRE ATT&CK · Forensique</p></div>
+        <div class="p-4 rounded-lg border" style="background:#0d1117;border-color:rgba(251,146,60,.15);"><div class="font-display text-xs font-bold mb-2" style="color:#fb923c;">// OBJECTIF</div><p class="text-xs" style="color:var(--dim);">Analyste TI · Mandiant / ANSSI / CrowdStrike · Cyber × Géopolitique</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="fade-in mb-14 text-center">
+        <p class="text-xs tracking-widest mb-2" style="color:var(--green);">// STACK TECHNIQUE</p>
+        <h2 class="font-display font-bold text-3xl md:text-4xl text-white">TECH <span style="color:var(--green);">SKILLS</span></h2>
+      </div>
+      <div class="fade-in grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="p-6 rounded-lg border card-hover" style="background:#0d1117;border-color:var(--border);">
+          <div class="flex items-center gap-3 mb-6"><div class="w-10 h-10 rounded flex items-center justify-center" style="background:rgba(0,212,255,.1);"><i class="fa-solid fa-network-wired" style="color:var(--blue);"></i></div><div><div class="font-display text-sm font-bold text-white">RÉSEAUX</div><div class="text-xs" style="color:var(--dim);">TCP/IP · Protocoles · Architecture</div></div></div>
+          <div class="space-y-4">
+            <div><div class="flex justify-between text-xs mb-1"><span style="color:var(--dim);">TCP/IP · DNS · HTTP/S</span><span style="color:var(--blue);">75%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:75%"></div></div></div>
+            <div><div class="flex justify-between text-xs mb-1"><span style="color:var(--dim);">Wireshark / analyse trafic</span><span style="color:var(--blue);">65%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:65%"></div></div></div>
+            <div><div class="flex justify-between text-xs mb-1"><span style="color:var(--dim);">Nmap / scan réseau</span><span style="color:var(--blue);">70%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:70%"></div></div></div>
+          </div>
+        </div>
+        <div class="p-6 rounded-lg border card-hover" style="background:#0d1117;border-color:var(--border);">
+          <div class="flex items-center gap-3 mb-6"><div class="w-10 h-10 rounded flex items-center justify-center" style="background:rgba(0,255,157,.1);"><i class="fa-brands fa-linux" style="color:var(--green);"></i></div><div><div class="font-display text-sm font-bold text-white">LINUX / KALI</div><div class="text-xs" style="color:var(--dim);">Dual Boot · Outils cyber · Terminal</div></div></div>
+          <div class="space-y-4">
+            <div><div class="flex justify-between text-xs mb-1"><span style="color:var(--dim);">Kali Linux (dual boot)</span><span style="color:var(--green);">70%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:70%"></div></div></div>
+            <div><div class="flex justify-between text-xs mb-1"><span style="color:var(--dim);">Bash / ligne de commande</span><span style="color:var(--green);">65%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:65%"></div></div></div>
+            <div><div class="flex justify-between text-xs mb-1"><span style="color:var(--dim);">Administration système</span><span style="color:var(--green);">60%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:60%"></div></div></div>
+          </div>
+        </div>
+        <div class="p-6 rounded-lg border card-hover" style="background:#0d1117;border-color:var(--border);">
+          <div class="flex items-center gap-3 mb-6"><div class="w-10 h-10 rounded flex items-center justify-center" style="background:rgba(168,85,247,.1);"><i class="fa-brands fa-python" style="color:#a855f7;"></i></div><div><div class="font-display text-sm font-bold text-white">PYTHON</div><div class="text-xs" style="color:var(--dim);">Scripts · APIs · Automatisation</div></div></div>
+          <div class="space-y-4">
+            <div><div class="flex justify-between text-xs mb-1"><span style="color:var(--dim);">Python (scripts cyber)</span><span style="color:#a855f7;">70%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:70%"></div></div></div>
+            <div><div class="flex justify-between text-xs mb-1"><span style="color:var(--dim);">Appels API REST</span><span style="color:#a855f7;">65%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:65%"></div></div></div>
+            <div><div class="flex justify-between text-xs mb-1"><span style="color:var(--dim);">Hashlib · Requests · Jinja2</span><span style="color:#a855f7;">60%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:60%"></div></div></div>
+          </div>
+        </div>
+        <div class="p-6 rounded-lg border card-hover" style="background:#0d1117;border-color:var(--border);">
+          <div class="flex items-center gap-3 mb-6"><div class="w-10 h-10 rounded flex items-center justify-center" style="background:rgba(251,146,60,.1);"><i class="fa-solid fa-magnifying-glass-chart" style="color:#fb923c;"></i></div><div><div class="font-display text-sm font-bold text-white">OSINT & THREAT INTEL</div><div class="text-xs" style="color:var(--dim);">MITRE ATT&CK · Géopolitique APT</div></div></div>
+          <div class="space-y-4">
+            <div><div class="flex justify-between text-xs mb-1"><span style="color:var(--dim);">MITRE ATT&CK Framework</span><span style="color:#fb923c;">65%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:65%"></div></div></div>
+            <div><div class="flex justify-between text-xs mb-1"><span style="color:var(--dim);">OSINT (Shodan, VirusTotal)</span><span style="color:#fb923c;">60%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:60%"></div></div></div>
+            <div><div class="flex justify-between text-xs mb-1"><span style="color:var(--dim);">Veille géopolitique APT</span><span style="color:#fb923c;">70%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:70%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTAs -->
+  <section class="px-4 pb-0">
+    <div class="max-w-5xl mx-auto fade-in">
+      <a href="projects.html" class="block group mb-4">
+        <div class="p-6 rounded-lg border transition-all flex items-center gap-6" style="background:#0d1117;border-color:rgba(0,255,157,.25);" onmouseover="this.style.borderColor='rgba(0,255,157,.7)';this.style.boxShadow='0 0 40px rgba(0,255,157,.1)'" onmouseout="this.style.borderColor='rgba(0,255,157,.25)';this.style.boxShadow='none'">
+          <div class="w-14 h-14 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(0,255,157,.08);border:1px solid rgba(0,255,157,.2);"><i class="fa-solid fa-code-branch text-xl" style="color:var(--green);"></i></div>
+          <div class="flex-1"><div class="font-display text-sm font-bold text-white mb-1">PROJETS GITHUB <span class="ml-2 text-xs px-2 py-0.5 rounded" style="background:rgba(0,255,157,.1);color:var(--green);border:1px solid rgba(0,255,157,.3);">6 PROJETS</span></div><p class="text-xs" style="color:#6e7f96;">Password Audit · Stuxnet Analyzer · APT Tracker · IP Lookup · Network Scanner · World Map</p></div>
+          <i class="fa-solid fa-arrow-right text-sm transition-transform duration-300 group-hover:translate-x-2" style="color:var(--green);flex-shrink:0;"></i>
+        </div>
+      </a>
+      <a href="analyses.html" class="block group mb-4">
+        <div class="p-6 rounded-lg border transition-all flex items-center gap-6" style="background:#0d1117;border-color:rgba(0,212,255,.25);" onmouseover="this.style.borderColor='rgba(0,212,255,.7)';this.style.boxShadow='0 0 40px rgba(0,212,255,.12)'" onmouseout="this.style.borderColor='rgba(0,212,255,.25)';this.style.boxShadow='none'">
+          <div class="w-14 h-14 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.3);"><i class="fa-solid fa-scroll text-xl" style="color:var(--blue);"></i></div>
+          <div class="flex-1"><div class="font-display text-sm font-bold text-white mb-1">ANALYSES CYBERATTAQUES <span class="ml-2 text-xs px-2 py-0.5 rounded" style="background:rgba(251,191,36,.1);color:#fbbf24;border:1px solid rgba(251,191,36,.3);">🚧 WIP</span></div><p class="text-xs" style="color:#6e7f96;">Rapports MITRE ATT&CK · Stuxnet · NotPetya · SolarWinds · Contexte géopolitique</p></div>
+          <i class="fa-solid fa-arrow-right text-sm transition-transform duration-300 group-hover:translate-x-2" style="color:var(--blue);flex-shrink:0;"></i>
+        </div>
+      </a>
+      <a href="lab.html" class="block group">
+        <div class="p-6 rounded-lg border transition-all flex items-center gap-6" style="background:#0d1117;border-color:rgba(255,71,87,.25);" onmouseover="this.style.borderColor='rgba(255,71,87,.7)';this.style.boxShadow='0 0 40px rgba(255,71,87,.12)'" onmouseout="this.style.borderColor='rgba(255,71,87,.25)';this.style.boxShadow='none'">
+          <div class="w-14 h-14 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.3);"><i class="fa-solid fa-terminal text-xl" style="color:#ff4757;"></i></div>
+          <div class="flex-1"><div class="font-display text-sm font-bold text-white mb-1">APT LAB <span class="ml-2 text-xs px-2 py-0.5 rounded" style="background:rgba(255,71,87,.1);color:#ff4757;border:1px solid rgba(255,71,87,.3);">INTERACTIF</span></div><p class="text-xs" style="color:#6e7f96;">Terminal simulé · Identifie le groupe APT caché · Challenge OSINT interactif</p></div>
+          <i class="fa-solid fa-arrow-right text-sm transition-transform duration-300 group-hover:translate-x-2" style="color:#ff4757;flex-shrink:0;"></i>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="mt-20 border-t px-4 py-12" style="border-color:var(--border);">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+        <div><div class="font-display font-black text-xl mb-1" style="color:var(--green);">ANTOINE MAKENGO KIALA</div><p class="text-xs" style="color:var(--dim);">Futur Analyste Threat Intelligence · Île-de-France · 17 ans</p></div>
+        <a href="https://github.com/4ntoiin" target="_blank" class="flex items-center gap-2 px-5 py-3 rounded border text-xs tracking-widest transition-all" style="border-color:var(--border);color:var(--dim);" onmouseover="this.style.borderColor='var(--green)';this.style.color='var(--green)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--dim)'"><i class="fa-brands fa-github text-base"></i> GitHub</a>
+      </div>
+      <div class="mt-8 pt-8 border-t text-center text-xs" style="border-color:var(--border);color:var(--dim);">
+        <span style="color:var(--green);">root@antoine</span>:<span style="color:var(--blue);">~</span>$ echo "Cyber × Géopolitique — Follow the threat." &nbsp;·&nbsp; 2025
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const termLines=[
+      ['cmd','$ ','whoami'],
+      ['out','','','→  <span class="hi">Antoine Makengo Kiala</span>, 17 ans, Île-de-France'],
+      ['gap'],
+      ['cmd','$ ','cat status.txt'],
+      ['out','','','→  Étudiant STI2D · <span class="hi">Cyber × Géopolitique</span> · Kali Linux'],
+      ['gap'],
+      ['cmd','$ ','cat target.txt'],
+      ['out','','','→  BUT Réseaux &amp; Télécoms <span class="hi">▸</span> Analyste Threat Intelligence'],
+      ['gap'],
+      ['cmd','$ ','ls projects/'],
+      ['out','','','→  password-audit/  stuxnet-analyzer/  apt-tracker/  ip-lookup/  net-scanner/  world-map/'],
+      ['gap'],
+      ['cursor'],
+    ];
+    const tb=document.getElementById('termBody');
+    function buildTerminal(){
+      let d=0;
+      termLines.forEach(l=>{
+        if(l[0]==='gap'){setTimeout(()=>{const e=document.createElement('div');e.style.height='8px';tb.appendChild(e);},d);d+=60;return;}
+        if(l[0]==='cursor'){setTimeout(()=>{const e=document.createElement('div');e.innerHTML='<span class="prompt">$ </span><span class="cursor"></span>';tb.appendChild(e);},d);return;}
+        if(l[0]==='cmd'){const t=l[2];setTimeout(()=>{const e=document.createElement('div');e.innerHTML=`<span class="prompt">${l[1]}</span><span class="cmd"></span>`;tb.appendChild(e);const s=e.querySelector('.cmd');let i=0;const iv=setInterval(()=>{if(i<t.length){s.textContent+=t[i++];}else clearInterval(iv);},55);},d);d+=t.length*55+200;}
+        if(l[0]==='out'){setTimeout(()=>{const e=document.createElement('div');e.classList.add('out');e.innerHTML=l[3];tb.appendChild(e);},d);d+=180;}
+      });
+    }
+    buildTerminal();
+    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');e.target.querySelectorAll('.skill-bar-fill').forEach(b=>{setTimeout(()=>b.classList.add('animated'),200);});}});},{threshold:0.12});
+    document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+  </script>
+</body>
+</html>

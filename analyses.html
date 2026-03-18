@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Antoine | Analyses Cyberattaques</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script>tailwind.config={theme:{extend:{fontFamily:{mono:['"JetBrains Mono"','monospace'],display:['Orbitron','monospace']}}}}</script>
+  <style>
+    :root{--green:#00ff9d;--blue:#00d4ff;--dark:#080c10;--card:#0d1117;--border:#1a2332;--dim:#8b949e;}
+    *{box-sizing:border-box;margin:0;padding:0;}html{background:var(--dark);}
+    body{font-family:'JetBrains Mono',monospace;background:var(--dark);color:#c9d1d9;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,.15) 3px,rgba(0,0,0,.15) 4px);pointer-events:none;z-index:9999;}
+    .grid-bg{background-image:linear-gradient(rgba(0,255,157,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,157,.04) 1px,transparent 1px);background-size:40px 40px;}
+    .glow-green{text-shadow:0 0 10px var(--green),0 0 30px rgba(0,255,157,.4);}
+    .fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}.fade-in.visible{opacity:1;transform:translateY(0);}
+    nav{position:sticky;top:0;z-index:100;background:rgba(8,12,16,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+    ::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:var(--dark);}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}::-webkit-scrollbar-thumb:hover{background:var(--green);}
+    .analysis-card{background:#0d1117;border:1px solid var(--border);border-radius:12px;padding:24px;transition:all .3s;}
+    .analysis-card:hover{border-color:rgba(0,212,255,.4);box-shadow:0 0 30px rgba(0,212,255,.08);transform:translateY(-2px);}
+    .mitre-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:3px;font-size:10px;font-family:'JetBrains Mono',monospace;font-weight:600;border:1px solid rgba(0,212,255,.3);background:rgba(0,212,255,.06);color:var(--blue);}
+    .country-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:3px;font-size:11px;border:1px solid;font-weight:600;}
+    .wip-banner{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:32px;}
+  </style>
+</head>
+<body class="grid-bg">
+  <nav>
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="font-display font-black text-lg tracking-widest glow-green" style="color:var(--green);">&lt;4NTOIIN /&gt;</a>
+      <div class="flex items-center gap-6 text-xs" style="color:var(--dim);">
+        <a href="index.html" class="hover:text-white transition-colors">Home</a>
+        <a href="projects.html" class="hover:text-white transition-colors">Projets</a>
+        <a href="lab.html" class="hover:text-white transition-colors">APT Lab</a>
+        <a href="analyses.html" style="color:var(--blue);">Analyses</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="px-4 pt-16 pb-8">
+    <div class="max-w-5xl mx-auto fade-in">
+      <div class="text-xs mb-5 flex items-center gap-2" style="color:var(--dim);">
+        <a href="index.html" class="hover:text-white">~</a><span>/</span><span style="color:var(--blue);">analyses</span>
+      </div>
+      <div class="flex items-start gap-5">
+        <div class="w-14 h-14 rounded-lg flex-shrink-0 flex items-center justify-center" style="background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);"><i class="fa-solid fa-scroll text-xl" style="color:var(--blue);"></i></div>
+        <div>
+          <h1 class="font-display font-black text-3xl md:text-4xl tracking-widest text-white mb-2">ANALYSES</h1>
+          <p class="text-sm" style="color:var(--dim);">Cyberattaques étatiques · MITRE ATT&CK · Géopolitique · Threat Intelligence</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="px-4 pb-16">
+    <div class="max-w-5xl mx-auto">
+      <div class="wip-banner fade-in">
+        <i class="fa-solid fa-triangle-exclamation" style="color:#fbbf24;flex-shrink:0;"></i>
+        <p class="text-xs" style="color:#fbbf24;">Section en cours de construction — rapports HTML détaillés à venir. Voir le projet <a href="https://github.com/4ntoiin/stuxnet-analyzer" target="_blank" style="text-decoration:underline;">stuxnet-analyzer</a> sur GitHub pour un exemple complet.</p>
+      </div>
+      <div class="grid grid-cols-1 gap-6">
+
+        <!-- Stuxnet — analyse complète -->
+        <div class="analysis-card fade-in" style="border-color:rgba(0,255,157,.25);">
+          <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
+            <div>
+              <div class="flex items-center gap-3 mb-2">
+                <h2 class="font-display text-xl font-black text-white">STUXNET</h2>
+                <span class="text-xs px-2 py-0.5 rounded" style="background:rgba(0,255,157,.1);color:var(--green);border:1px solid rgba(0,255,157,.3);">✓ ANALYSE COMPLÈTE</span>
+              </div>
+              <p class="text-xs mb-3" style="color:var(--dim);">2010 · USA + Israël → Iran · Infrastructure nucléaire (Natanz)</p>
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="country-tag" style="color:var(--blue);border-color:rgba(0,212,255,.3);background:rgba(0,212,255,.06);">🇺🇸 NSA / EQUATION GROUP</span>
+                <span class="country-tag" style="color:var(--green);border-color:rgba(0,255,157,.3);background:rgba(0,255,157,.06);">🇮🇱 Unit 8200</span>
+                <span class="country-tag" style="color:#ff4757;border-color:rgba(255,71,87,.3);background:rgba(255,71,87,.06);">🎯 Iran Natanz</span>
+              </div>
+            </div>
+            <a href="https://github.com/4ntoiin/stuxnet-analyzer" target="_blank" class="flex items-center gap-2 px-4 py-2 rounded border text-xs transition-all" style="border-color:var(--border);color:var(--dim);" onmouseover="this.style.borderColor='var(--green)';this.style.color='var(--green)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--dim)'"><i class="fa-brands fa-github"></i> Voir le rapport</a>
+          </div>
+          <p class="text-xs mb-4" style="color:var(--dim);line-height:1.8;">Première cyberarme à avoir causé des destructions physiques réelles. Stuxnet a détruit ~1000 centrifugeuses d'enrichissement d'uranium à Natanz, retardant le programme nucléaire iranien de 2 ans. Exploitait 4 zero-days Windows simultanément — jamais vu avant ou depuis.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="mitre-tag">T1195 Supply Chain</span>
+            <span class="mitre-tag">T1091 Removable Media</span>
+            <span class="mitre-tag">T1068 Privilege Escalation</span>
+            <span class="mitre-tag">T1553 Subvert Trust</span>
+            <span class="mitre-tag">T1565 Data Manipulation</span>
+            <span class="mitre-tag">T1499 Endpoint DoS</span>
+            <span class="mitre-tag">T1057 Process Discovery</span>
+          </div>
+        </div>
+
+        <!-- NotPetya — WIP -->
+        <div class="analysis-card fade-in" style="border-color:rgba(255,71,87,.2);opacity:.8;">
+          <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
+            <div>
+              <div class="flex items-center gap-3 mb-2">
+                <h2 class="font-display text-xl font-black text-white">NOTPETYA</h2>
+                <span class="text-xs px-2 py-0.5 rounded" style="background:rgba(251,191,36,.1);color:#fbbf24;border:1px solid rgba(251,191,36,.3);">🚧 EN COURS</span>
+              </div>
+              <p class="text-xs mb-3" style="color:var(--dim);">2017 · Russie (Sandworm/GRU) → Ukraine + Monde · Wiper destructeur</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="country-tag" style="color:#ff4757;border-color:rgba(255,71,87,.3);background:rgba(255,71,87,.06);">🇷🇺 Sandworm (GRU)</span>
+                <span class="country-tag" style="color:var(--dim);border-color:var(--border);background:rgba(0,0,0,.2);">🎯 Ukraine + 65 pays</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-xs" style="color:var(--dim);line-height:1.8;">10 milliards de dollars de dégâts — la cyberattaque la plus coûteuse de l'histoire. Déguisé en ransomware mais conçu pour détruire. Propagation via EternalBlue (exploit NSA) + Mimikatz. Maersk, Merck, FedEx parmi les victimes.</p>
+        </div>
+
+        <!-- SolarWinds — WIP -->
+        <div class="analysis-card fade-in" style="border-color:rgba(0,212,255,.2);opacity:.8;">
+          <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
+            <div>
+              <div class="flex items-center gap-3 mb-2">
+                <h2 class="font-display text-xl font-black text-white">SOLARWINDS</h2>
+                <span class="text-xs px-2 py-0.5 rounded" style="background:rgba(251,191,36,.1);color:#fbbf24;border:1px solid rgba(251,191,36,.3);">🚧 EN COURS</span>
+              </div>
+              <p class="text-xs mb-3" style="color:var(--dim);">2020 · Russie (APT29 / Cozy Bear) → Agences gouvernementales US</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="country-tag" style="color:var(--blue);border-color:rgba(0,212,255,.3);background:rgba(0,212,255,.06);">🇷🇺 APT29 / SVR</span>
+                <span class="country-tag" style="color:var(--dim);border-color:var(--border);background:rgba(0,0,0,.2);">🎯 18 000 organisations</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-xs" style="color:var(--dim);line-height:1.8;">Compromission de la chaîne d'approvisionnement logicielle via une mise à jour piégée de SolarWinds Orion. NSA, Pentagone, Trésor américain touchés. Resté non détecté pendant 9 mois.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t px-4 py-10" style="border-color:var(--border);">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div><div class="font-display font-black text-lg mb-1" style="color:var(--green);">ANTOINE MAKENGO KIALA</div><p class="text-xs" style="color:var(--dim);">Futur Analyste Threat Intelligence · Île-de-France · 17 ans</p></div>
+      <a href="https://github.com/4ntoiin" target="_blank" class="flex items-center gap-2 px-5 py-3 rounded border text-xs tracking-widest transition-all" style="border-color:var(--border);color:var(--dim);" onmouseover="this.style.borderColor='var(--green)';this.style.color='var(--green)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--dim)'"><i class="fa-brands fa-github text-base"></i> GitHub</a>
+    </div>
+    <div class="max-w-5xl mx-auto mt-6 pt-6 border-t text-center text-xs" style="border-color:var(--border);color:var(--dim);">
+      <span style="color:var(--green);">root@antoine</span>:<span style="color:var(--blue);">~/analyses</span>$ echo "Follow the threat." &nbsp;·&nbsp; 2025
+    </div>
+  </footer>
+  <script>
+    const obs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('visible');});},{threshold:0.06});
+    document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+  </script>
+</body>
+</html>

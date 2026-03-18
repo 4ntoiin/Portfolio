@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Antoine | APT Lab</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    :root{--green:#00ff9d;--blue:#00d4ff;--dark:#080c10;--card:#0d1117;--border:#1a2332;--dim:#8b949e;}
+    *{box-sizing:border-box;margin:0;padding:0;}html{background:var(--dark);}
+    body{font-family:'JetBrains Mono',monospace;background:var(--dark);color:#c9d1d9;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,.15) 3px,rgba(0,0,0,.15) 4px);pointer-events:none;z-index:9999;}
+    .grid-bg{background-image:linear-gradient(rgba(0,255,157,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,157,.04) 1px,transparent 1px);background-size:40px 40px;}
+    nav{position:sticky;top:0;z-index:100;background:rgba(8,12,16,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+    .glow-green{text-shadow:0 0 10px var(--green),0 0 30px rgba(0,255,157,.4);}
+    .terminal{background:#060a0e;border:1px solid rgba(0,255,157,.3);border-radius:8px;overflow:hidden;box-shadow:0 0 40px rgba(0,255,157,.08);}
+    .term-bar{background:#161b22;padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);}
+    .dot{width:12px;height:12px;border-radius:50%;}.dot-r{background:#ff5f57;}.dot-y{background:#febc2e;}.dot-g{background:#28c840;}
+    #output{padding:20px;font-size:13px;line-height:1.9;min-height:300px;max-height:400px;overflow-y:auto;}
+    #output::-webkit-scrollbar{width:4px;}#output::-webkit-scrollbar-thumb{background:var(--border);}
+    .line-prompt{color:var(--green);}
+    .line-out{color:var(--dim);}
+    .line-hi{color:var(--blue);}
+    .line-warn{color:#ff4757;}
+    .line-success{color:var(--green);}
+    .line-flag{color:#fbbf24;font-weight:700;}
+    .input-row{display:flex;align-items:center;gap:8px;padding:10px 20px;border-top:1px solid var(--border);background:#0d1117;}
+    #cmdInput{flex:1;background:transparent;border:none;outline:none;font-family:'JetBrains Mono',monospace;font-size:13px;color:#c9d1d9;}
+    .hint-card{background:#0d1117;border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;cursor:pointer;transition:all .2s;}
+    .hint-card:hover{border-color:rgba(0,255,157,.4);background:rgba(0,255,157,.03);}
+    .score-display{font-family:'Orbitron',monospace;font-weight:900;}
+    @keyframes blink{50%{opacity:0;}}
+    .cursor-blink{animation:blink 1s step-end infinite;}
+  </style>
+</head>
+<body class="grid-bg">
+  <nav>
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="font-display font-black text-lg tracking-widest glow-green" style="color:var(--green);">&lt;4NTOIIN /&gt;</a>
+      <div class="flex items-center gap-6 text-xs" style="color:var(--dim);">
+        <a href="index.html" class="hover:text-white transition-colors">Home</a>
+        <a href="projects.html" class="hover:text-white transition-colors">Projets</a>
+        <a href="analyses.html" class="hover:text-white transition-colors">Analyses</a>
+        <a href="lab.html" style="color:#ff4757;">APT Lab</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-5xl mx-auto px-4 pt-16 pb-4">
+    <div class="text-xs mb-5 flex items-center gap-2" style="color:var(--dim);">
+      <a href="index.html" class="hover:text-white">~</a><span>/</span><span style="color:#ff4757;">lab</span>
+    </div>
+    <div class="flex items-start gap-5 mb-8">
+      <div class="w-14 h-14 rounded-lg flex-shrink-0 flex items-center justify-center" style="background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.3);"><i class="fa-solid fa-terminal text-xl" style="color:#ff4757;"></i></div>
+      <div>
+        <h1 class="font-display font-black text-3xl md:text-4xl tracking-widest text-white mb-2">APT LAB</h1>
+        <p class="text-sm" style="color:var(--dim);">Terminal interactif · Identifie le groupe APT à partir des indices · Challenge OSINT</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-5xl mx-auto px-4 pb-16">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- Terminal -->
+      <div class="lg:col-span-2">
+        <div class="terminal">
+          <div class="term-bar">
+            <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+            <span style="font-size:11px;color:var(--dim);margin:auto;">antoine@kali — apt-lab</span>
+          </div>
+          <div id="output"></div>
+          <div class="input-row">
+            <span style="color:var(--green);">$</span>
+            <input id="cmdInput" type="text" placeholder="Tape une commande... (ex: help)" autocomplete="off" spellcheck="false" />
+            <span class="cursor-blink" style="color:var(--green);">█</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panneau droite -->
+      <div>
+        <div class="mb-4 p-4 rounded-lg" style="background:#0d1117;border:1px solid rgba(255,71,87,.25);">
+          <div class="font-display text-xs font-bold mb-3" style="color:#ff4757;">// SCORE</div>
+          <div class="text-center"><div class="score-display text-4xl" id="scoreDisplay" style="color:var(--green);">0</div><div class="text-xs mt-1" style="color:var(--dim);">points</div></div>
+          <div class="mt-3 flex justify-between text-xs" style="color:var(--dim);">
+            <span>Indices utilisés :</span><span id="hintsUsed" style="color:var(--blue);">0 / 3</span>
+          </div>
+        </div>
+
+        <div class="mb-4 p-4 rounded-lg" style="background:#0d1117;border:1px solid var(--border);">
+          <div class="font-display text-xs font-bold mb-3" style="color:var(--dim);">// COMMANDES DISPONIBLES</div>
+          <div class="space-y-2 text-xs" style="color:var(--dim);">
+            <div><span style="color:var(--green);">help</span> — liste les commandes</div>
+            <div><span style="color:var(--green);">start</span> — lance un nouveau challenge</div>
+            <div><span style="color:var(--green);">clue</span> — demander un indice (-100 pts)</div>
+            <div><span style="color:var(--green);">guess [groupe]</span> — identifier le groupe APT</div>
+            <div><span style="color:var(--green);">mitre</span> — affiche les techniques observées</div>
+            <div><span style="color:var(--green);">iocs</span> — liste les indicateurs</div>
+            <div><span style="color:var(--green);">clear</span> — efface le terminal</div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-lg" style="background:#0d1117;border:1px solid var(--border);">
+          <div class="font-display text-xs font-bold mb-3" style="color:var(--dim);">// GROUPES APT CONNUS</div>
+          <div class="space-y-1 text-xs" style="color:var(--dim);">
+            <div>→ <span style="color:#ff4757;">Sandworm</span> (Russie · GRU)</div>
+            <div>→ <span style="color:var(--blue);">APT28</span> / Fancy Bear (Russie · GRU)</div>
+            <div>→ <span style="color:var(--blue);">APT29</span> / Cozy Bear (Russie · SVR)</div>
+            <div>→ <span style="color:#eab308;">Lazarus</span> (Corée du Nord)</div>
+            <div>→ <span style="color:#fb923c;">APT41</span> (Chine · MSS)</div>
+            <div>→ <span style="color:var(--green);">EQUATION GROUP</span> (USA · NSA)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="border-t px-4 py-10" style="border-color:var(--border);">
+    <div class="max-w-5xl mx-auto text-center text-xs" style="color:var(--dim);">
+      <span style="color:var(--green);">root@antoine</span>:<span style="color:var(--blue);">~/lab</span>$ echo "Follow the threat." &nbsp;·&nbsp; 2025
+    </div>
+  </footer>
+
+  <script>
+    const out = document.getElementById('output');
+    const input = document.getElementById('cmdInput');
+    let score = 0;
+    let hintsUsed = 0;
+    let currentChallenge = null;
+    let challengeActive = false;
+
+    const challenges = [
+      {
+        id: 1,
+        answer: 'lazarus',
+        aliases: ['lazarus group','lazarus'],
+        context: 'Une banque centrale d\'Asie du Sud-Est a subi une intrusion. 81 millions de dollars dérobés via le réseau SWIFT.',
+        clues: [
+          'Les malwares trouvés partagent des strings de code avec des outils utilisés lors de l\'attaque Sony Pictures en 2014.',
+          'Les horaires d\'activité des attaquants correspondent au fuseau UTC+9. L\'objectif semble financier — remplir les caisses d\'un régime sous sanctions.',
+          'Le groupe est connu sous le nom de "Hidden Cobra" par le FBI. Il opère pour le Bureau 121 d\'un régime isolé.'
+        ],
+        mitre: ['T1059 Command and Scripting','T1078 Valid Accounts','T1048 Exfiltration Over Alt Protocol','T1531 Account Access Removal'],
+        iocs: ['Hash: 09b638f5f4f861867498c5e5e3b689d7','IP: 175.45.176.0/22 (DPRK range)','Domain: swiftbanker[.]com','Malware: FASTCASH, HOPLIGHT']
+      },
+      {
+        id: 2,
+        answer: 'sandworm',
+        aliases: ['sandworm','sandworm team'],
+        context: 'Des coupures d\'électricité touchent l\'Ukraine en plein hiver. 230 000 foyers privés de courant pendant 6 heures. Des systèmes SCADA industriels ont été ciblés.',
+        clues: [
+          'Le malware trouvé s\'appelle "BlackEnergy". Il a été utilisé pour attaquer des réseaux énergétiques en Ukraine depuis 2015.',
+          'Les attaquants ont utilisé des documents Word piégés en ukrainien, envoyés à des employés du secteur énergétique. Spear phishing avancé.',
+          'Ce groupe est une unité du GRU russe (Unité 74455). Il est aussi responsable de NotPetya en 2017.'
+        ],
+        mitre: ['T1566.001 Spear Phishing Attachment','T1078 Valid Accounts','T1485 Data Destruction','T1489 Service Stop'],
+        iocs: ['Malware: BlackEnergy, Industroyer','IP: 5.149.254.114','Domain: energy-ua[.]com','File: report_enfr.doc (dropper)']
+      },
+      {
+        id: 3,
+        answer: 'apt29',
+        aliases: ['apt29','cozy bear','apt 29'],
+        context: 'Une mise à jour logicielle d\'un outil de monitoring réseau utilisé par 18 000 organisations a été compromise. Des agences gouvernementales américaines ont été infiltrées pendant 9 mois.',
+        clues: [
+          'La backdoor insérée dans le logiciel s\'appelle SUNBURST. Elle attendait 12 à 14 jours avant toute activité pour éviter les sandboxes.',
+          'Les attaquants ont ciblé SolarWinds Orion, un logiciel utilisé par la NASA, le Pentagone et le Trésor américain. Supply chain attack.',
+          'Ce groupe est le service de renseignement extérieur russe (SVR), distinct du GRU. Connu pour sa discrétion et ses opérations de longue durée.'
+        ],
+        mitre: ['T1195.002 Compromise Software Supply Chain','T1078 Valid Accounts','T1027 Obfuscated Files','T1070 Indicator Removal'],
+        iocs: ['Malware: SUNBURST, TEARDROP, RAINDROP','Domain: avsvmcloud[.]com','File: SolarWinds.Orion.Core.BusinessLayer.dll','Hash: b91ce2fa41029f6955bff20079468448']
+      }
+    ];
+
+    function print(text, cls='line-out') {
+      const d = document.createElement('div');
+      d.className = cls;
+      d.innerHTML = text;
+      out.appendChild(d);
+      out.scrollTop = out.scrollHeight;
+    }
+
+    function printBlank() { print('&nbsp;'); }
+
+    function updateScore(v) {
+      score = Math.max(0, score + v);
+      document.getElementById('scoreDisplay').textContent = score;
+    }
+
+    function updateHints() {
+      document.getElementById('hintsUsed').textContent = hintsUsed + ' / 3';
+    }
+
+    function handleCommand(cmd) {
+      const raw = cmd.trim();
+      print('<span class="line-prompt">$ </span>' + raw, 'line-prompt');
+      const c = raw.toLowerCase();
+
+      if (c === 'help') {
+        printBlank();
+        print('Commandes disponibles :', 'line-hi');
+        print('  start        — Lancer un nouveau challenge APT');
+        print('  clue         — Obtenir un indice (-100 pts)');
+        print('  guess [nom]  — Identifier le groupe APT');
+        print('  mitre        — Voir les techniques MITRE ATT&CK observées');
+        print('  iocs         — Voir les indicateurs de compromission');
+        print('  clear        — Effacer le terminal');
+        print('  score        — Voir ton score actuel');
+        printBlank();
+
+      } else if (c === 'start') {
+        currentChallenge = challenges[Math.floor(Math.random() * challenges.length)];
+        challengeActive = true;
+        hintsUsed = 0;
+        score = 500;
+        updateScore(0);
+        updateHints();
+        printBlank();
+        print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'line-hi');
+        print('  NOUVEAU CHALLENGE APT — IDENTIFIE LE GROUPE', 'line-hi');
+        print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'line-hi');
+        printBlank();
+        print('[CONTEXTE] ' + currentChallenge.context, 'line-out');
+        printBlank();
+        print('→ Score de départ : 500 pts', 'line-success');
+        print('→ Chaque indice coûte 100 pts', 'line-out');
+        print('→ Tape <span style="color:var(--green)">clue</span> pour un indice, <span style="color:var(--green)">guess [groupe]</span> pour répondre', 'line-out');
+        printBlank();
+
+      } else if (c === 'clue') {
+        if (!challengeActive) { print('[!] Lance d\'abord un challenge avec la commande start', 'line-warn'); return; }
+        if (hintsUsed >= currentChallenge.clues.length) { print('[!] Tu as déjà utilisé tous les indices disponibles', 'line-warn'); return; }
+        updateScore(-100);
+        const clue = currentChallenge.clues[hintsUsed];
+        hintsUsed++;
+        updateHints();
+        printBlank();
+        print('[INDICE ' + hintsUsed + '/3] ' + clue, 'line-hi');
+        print('(-100 pts) Score actuel : ' + score, 'line-out');
+        printBlank();
+
+      } else if (c === 'mitre') {
+        if (!challengeActive || !currentChallenge) { print('[!] Lance d\'abord un challenge avec start', 'line-warn'); return; }
+        printBlank();
+        print('Techniques MITRE ATT&CK observées :', 'line-hi');
+        currentChallenge.mitre.forEach(t => print('  → ' + t));
+        printBlank();
+
+      } else if (c === 'iocs') {
+        if (!challengeActive || !currentChallenge) { print('[!] Lance d\'abord un challenge avec start', 'line-warn'); return; }
+        printBlank();
+        print('Indicateurs de compromission (IOCs) :', 'line-hi');
+        currentChallenge.iocs.forEach(i => print('  → ' + i));
+        printBlank();
+
+      } else if (c.startsWith('guess ')) {
+        if (!challengeActive) { print('[!] Lance d\'abord un challenge avec start', 'line-warn'); return; }
+        const g = c.replace('guess ', '').trim();
+        if (currentChallenge.aliases.includes(g)) {
+          const bonus = hintsUsed === 0 ? 200 : 0;
+          updateScore(bonus);
+          printBlank();
+          print('█████████████████████████████████████████', 'line-success');
+          print('  ✓ CORRECT ! Le groupe est : ' + currentChallenge.answer.toUpperCase(), 'line-success');
+          print('█████████████████████████████████████████', 'line-success');
+          if (bonus > 0) print('  🏆 BONUS : +200 pts (aucun indice utilisé !)', 'line-flag');
+          print('  Score final : ' + score + ' points', 'line-success');
+          printBlank();
+          print('Tape start pour un nouveau challenge.', 'line-out');
+          printBlank();
+          challengeActive = false;
+        } else {
+          updateScore(-50);
+          printBlank();
+          print('[✗] Mauvaise réponse : "' + g + '"', 'line-warn');
+          print('(-50 pts) Réessaie ou utilise clue pour un indice.', 'line-out');
+          printBlank();
+        }
+
+      } else if (c === 'score') {
+        printBlank();
+        print('Score actuel : <span style="color:var(--green);font-weight:700;">' + score + ' pts</span>', 'line-hi');
+        printBlank();
+
+      } else if (c === 'clear') {
+        out.innerHTML = '';
+
+      } else if (c === '') {
+        // rien
+
+      } else {
+        print('Commande inconnue : "' + raw + '". Tape help pour voir les commandes.', 'line-warn');
+      }
+    }
+
+    // Intro
+    print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'line-hi');
+    print('  APT LAB — Threat Intelligence Challenge', 'line-hi');
+    print('  par Antoine Makengo Kiala (@4ntoiin)', 'line-hi');
+    print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'line-hi');
+    printBlank();
+    print('Bienvenue dans l\'APT Lab.', 'line-out');
+    print('Tu vas recevoir le contexte d\'une cyberattaque réelle.', 'line-out');
+    print('Analyse les indices, les IOCs, les techniques MITRE ATT&CK,', 'line-out');
+    print('et identifie le groupe APT responsable.', 'line-out');
+    printBlank();
+    print('→ Tape <span style="color:var(--green);">start</span> pour commencer.', 'line-out');
+    print('→ Tape <span style="color:var(--green);">help</span> pour voir toutes les commandes.', 'line-out');
+    printBlank();
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        const val = input.value;
+        input.value = '';
+        handleCommand(val);
+      }
+    });
+  </script>
+</body>
+</html>
